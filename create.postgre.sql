@@ -40,16 +40,24 @@ create table groups_groups (
   foreign key (group_id) references groups (id),
 );
 
+create table types (
+  id serial primary key,
+  name varchar(255)
+);
+
 create table articles (
   id serial primary key,
   title varchar(255),
+  type_id int,
+  due_date  timestamp,
   content text,
   step_id int,
   max_char int default 0,
   min_char int default 0,
   author varchar(100),
   
-  foreign key (step_id) references steps (id)
+  foreign key (step_id) references steps (id),
+  foreign key (type_id) references types (id)
 );
 
 insert into users(username) values('guest');

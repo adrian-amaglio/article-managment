@@ -1,0 +1,41 @@
+{
+  "step" : {
+    "id" : 7,
+    "name" : "Rédaction",
+    "can_create" : false
+  },
+  "Articles" : [
+{
+  "id" : 192867192,
+  "title" : "Il y a 30 ans",
+  "type" : "article",
+  "due_date" : 1523179586,
+  "content" : "Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.auijmezuaeuiemiueiuleui eiuealuimelui eiuemaiue iueeiuemi umae,ufip euple ulnepuesupletsuinletulneodstupeftelupftelp ufeute unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.",
+  "max_char" : 600,
+  "min_char" : 550,
+  "author" : "Juju et Rose",
+  "can_read" : true,
+  "can_write" : true,
+  "can_create" : false,
+  "can_delete" : false,
+  "can_validate" : false
+}
+,
+{
+  "id" : 192867191,
+  "title" : "Miam",
+  "type" : "article",
+  "due_date" : 1523180586,
+  "content" : "Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.auijmezuaeuiemiueiuleui eiuealuimelui eiuemaiue iueeiuemi umae,ufip euple ulnepuesupletsuinletulneodstupeftelupftelp ufeute unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.",
+  "max_char" : 600,
+  "min_char" : 550,
+  "author" : "Rose",
+  "can_read" : true,
+  "can_write" : true,
+  "can_delete" : false,
+  "can_validate" : false
+}
+
+
+]
+}
