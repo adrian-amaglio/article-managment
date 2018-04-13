@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<title>Article managment</title>
+</head>
+<body>
+	<main>
+		
+	<h2>Aujourd'hui</h2>
+		<ul>
+			<li v-for="article in res.articles">
+				<a href="article.html">
+					<H3>{{article.title}}</H3>
+					<div>{{article.type}}</div>
+					<div>{{article.max_char}} charactères</div>
+					<div>à rendre à {{article.due_date}}</div>>
+				</a>
+			</li>
+		</ul>
+	<h2>Demain</h2>
+	</main>
+</body>
+</html>

@@ -1,10 +1,11 @@
 {
   "step" : {
     "id" : 7,
+    "next_steps" : [{"id":8, "name":"Correction"}],
     "name" : "Rédaction",
     "can_create" : false
   },
-  "Articles" : [
+  "articles" : [
 {
   "id" : 192867192,
   "title" : "Il y a 30 ans",
@@ -14,11 +15,11 @@
   "max_char" : 600,
   "min_char" : 550,
   "author" : "Juju et Rose",
-  "can_read" : true,
+  "can_read" : true,
   "can_write" : true,
-  "can_create" : false,
-  "can_delete" : false,
-  "can_validate" : false
+  "can_create" : false,
+  "can_delete" : false,
+  "can_validate" : false
 }
 ,
 {
@@ -30,10 +31,10 @@
   "max_char" : 600,
   "min_char" : 550,
   "author" : "Rose",
-  "can_read" : true,
+  "can_read" : true,
   "can_write" : true,
-  "can_delete" : false,
-  "can_validate" : false
+  "can_delete" : false,
+  "can_validate" : false
 }
 
 

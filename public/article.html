@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<title>Article edition</title>
+</head>
+<body>
+	<input v-bind="article.title" type="text" name="title"/>
+	<input v-bind="article.content" type="textarea" name="content">
+	<label>30/{{article.max_char}}</label>
+	<input v-bind="article.author" type="text" name="author">
+	<button>Sauvegarder</button>
+	<button>Sauvegarder et envoyer</button>
+	<button>Annuler</button>
+</body>
+</html>
