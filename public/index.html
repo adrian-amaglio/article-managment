@@ -9,20 +9,24 @@
 	<title>Article managment</title>
 </head>
 <body>
+	<h1>Rédaction</h1>
 	<main>
-		
-	<h2>Aujourd'hui</h2>
+		<button class="new_article" v-if="res.step.can_create">Nouvel Article</button>
 		<ul>
-			<li v-for="article in res.articles">
-				<a href="article.html">
-					<H3>{{article.title}}</H3>
-					<div>{{article.type}}</div>
-					<div>{{article.max_char}} charactères</div>
-					<div>à rendre à {{article.due_date}}</div>>
-				</a>
+			<li v-for="(day, index) in data">
+				<h2>{{index}}</h2>
+				<ul>
+					<li class="article" v-for="article in day">
+						<a v-bind:href="'article/'+article.id">
+							<div class="heading"><H3>{{article.title}}</H3><!-- @important White space
+							--><div class="type" v-bind:class="article.type">{{article.type}}</div></div>
+							<div class="body"><div class="nb_char">Entre <em>{{article.min_length}}</em> et <em>{{article.max_length}}</em> caractères</div>
+							<div class="due_date" v-bind:style="class_due_date(article.due_date)">à rendre avant {{date_test(article.due_date)}}</div></div>
+						</a>
+					</li>
+				</ul>
 			</li>
 		</ul>
-	<h2>Demain</h2>
 	</main>
 </body>
 </html>

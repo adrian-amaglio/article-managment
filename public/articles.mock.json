@@ -1,19 +1,38 @@
 {
   "step" : {
     "id" : 7,
-    "next_steps" : [{"id":8, "name":"Correction"}],
+    "next_steps" : [{"id":8, "name":"Correction", "text":"envoyer en relecture"}],
     "name" : "Rédaction",
     "can_create" : false
+  },
+  "deadline_colors" : [
+    {"seconds" : 3600, "color" : "red"},
+    {"seconds" : 14400, "color" : "orange"}
+  ],
+  "display" : {
+    "0" : {
+      "additional_string" : "Aujourd’hui",
+      "display" : true
+    },
+    "1" : {
+      "additional_string" : "Demain",
+      "display" : true
+    },
+    "default" : {
+      "additional_string" : "",
+      "display" : false
+    }
   },
   "articles" : [
 {
   "id" : 192867192,
   "title" : "Il y a 30 ans",
-  "type" : "article",
-  "due_date" : 1523179586,
+  "format" : "article",
+  "type" : "edito",
+  "due_date" : 1523741010,
   "content" : "Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.auijmezuaeuiemiueiuleui eiuealuimelui eiuemaiue iueeiuemi umae,ufip euple ulnepuesupletsuinletulneodstupeftelupftelp ufeute unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.",
-  "max_char" : 600,
-  "min_char" : 550,
+  "max_length" : 600,
+  "min_length" : 550,
   "author" : "Juju et Rose",
   "can_read" : true,
   "can_write" : true,
@@ -25,11 +44,28 @@
 {
   "id" : 192867191,
   "title" : "Miam",
-  "type" : "article",
-  "due_date" : 1523180586,
+  "format" : "article",
+  "type" : "miam",
+  "due_date" : 1523808027,
   "content" : "Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.auijmezuaeuiemiueiuleui eiuealuimelui eiuemaiue iueeiuemi umae,ufip euple ulnepuesupletsuinletulneodstupeftelupftelp ufeute unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.",
-  "max_char" : 600,
-  "min_char" : 550,
+  "max_length" : 600,
+  "min_length" : 550,
+  "author" : "Rose",
+  "can_read" : true,
+  "can_write" : true,
+  "can_delete" : false,
+  "can_validate" : false
+}
+,
+{
+  "id" : 192867195,
+  "title" : "Interview des Fatals Picards",
+  "format" : "radio",
+  "type" : "itw hier",
+  "due_date" : 1523180586,
+  "content" : "files/audio/mardi/itw2.ogg",
+  "max_length" : 120,
+  "min_length" : 60,
   "author" : "Rose",
   "can_read" : true,
   "can_write" : true,

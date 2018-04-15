@@ -40,7 +40,7 @@ create table groups_groups (
   foreign key (group_id) references groups (id),
 );
 
-create table types (
+create table formats (
   id serial primary key,
   name varchar(255)
 );
@@ -48,7 +48,8 @@ create table types (
 create table articles (
   id serial primary key,
   title varchar(255),
-  type_id int,
+  type varchar(255),
+  format_id int,
   due_date  timestamp,
   content text,
   step_id int,
@@ -57,7 +58,7 @@ create table articles (
   author varchar(100),
   
   foreign key (step_id) references steps (id),
-  foreign key (type_id) references types (id)
+  foreign key (format_id) references formats (id)
 );
 
 insert into users(username) values('guest');
