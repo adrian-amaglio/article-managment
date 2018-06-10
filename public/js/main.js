@@ -20,28 +20,34 @@ $(function(){
 		data:{
 			api: "/api/1.0",
 			res : { "step" : {}},
-			today : [],
-			tomorow : [],
-			data : {}
+			list : []
 		},
 		created: function() {
 			var url = location.href;
 			console.log(url.split("/")[4]);
 			$.get('articles.mock.json', (res,err) => {
 				this.res = res;
+				var data = {};
 				var date = Math.floor(Date.now()/1000/3600/24);
 				for (var i = res.articles.length - 1; i >= 0; i--) {
-					j = dif_due_date_today(res.articles[i].due_date, date);
-					a = nom_categorie(j,date,res.display)
-					if(this.data[j]){
-						this.data[j].push(res.articles[i])
+					dif_date = dif_due_date_today(res.articles[i].due_date, date);
+					if(data[dif_date]){
+						data[dif_date].push(res.articles[i])
 					}else{
-						this.data[j] = [res.articles[i]]
+						data[dif_date] = [res.articles[i]]
 					}
 				}
-				console.log(this.data);
-				//ca marche pas, faut sort
-				this.data = this.data.sort();
+				console.log(data);
+				for (i in data) {
+					if (this.res.display[i]) {
+						this.list.push({'key' : i, 'data': data[i], 'display':this.res.display[i].display})
+					}
+					else{
+						this.list.push({'key' : i, 'data': data[i], 'display':false});
+					}
+				}
+				this.list = this.list.sort((a,b)=>{return (a.key - b.key)});
+				console.log(this.list);
 			})
 
 		},
@@ -53,7 +59,7 @@ $(function(){
 				return(hours+":"+minutes)
 			},
 			class_due_date : function(time_stamp){
-				deadline_colors = this.res.deadline_colors.sort();
+				deadline_colors = this.res.deadline_colors.sort((a,b)=>{return (b.seconds - a.seconds)});
 				var date = Math.floor(Date.now() / 1000);
 				for (var i = deadline_colors.length - 1; i >= 0; i--) {
 					data = deadline_colors[i];
@@ -63,22 +69,26 @@ $(function(){
 					}
 				}
 				return "ok"
-			}
-			/*
-				function nom_categorie(i,date){
-					var diplay = res.display
-					console.log(i)
-					if(display[i]){
-						return(display[i].additional_string)
+			},
+			nom_categorie : function(i){
+				if(this.res.display[i]){
+					return(this.res.display[i].additional_string)
+				}
+				var date =  new Date((Math.floor(Date.now()/1000/3600/24)+parseInt(i))*24*3600*1000)
+				return (("0"+date.getDate()).substr(-2)+"/"+("0"+(date.getMonth()+1)).substr(-2)+"/"+date.getFullYear());
+			},
+			max_length : function(article){
+				if (article.format == "article") {
+					if(article.max_length > 0){
+						return 'Entre <em>'+article.min_length+'</em> et <em>'+article.max_length+'</em> caractères'
 					}
-					return(parse_date((date+i)*24*3600))
+					return '<em>∞</em> caractères'
 				}
-				function parse_date(time_stamp){
-					var truc = new Date(time_stamp*1000)
-					return (truc.getDate()+"/"+truc.getMonth()+"/"+truc.getFullYear());
-				}
-				
-			*/
+				return 'Entre <em>'+article.min_length+'</em> et <em>'+article.max_length+'</em> secondes'
+			},
+			repliage : function(){
+				return "none"
+			}
 		}
 	});
 })

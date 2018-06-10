@@ -3,7 +3,9 @@
     "id" : 7,
     "next_steps" : [{"id":8, "name":"Correction", "text":"envoyer en relecture"}],
     "name" : "Rédaction",
-    "can_create" : false
+    "can_create" : true,
+    "see_login_button" : true,
+    "can_admin" : true
   },
   "deadline_colors" : [
     {"seconds" : 3600, "color" : "red"},
@@ -30,8 +32,9 @@
   "format" : "article",
   "type" : "edito",
   "due_date" : 1523741010,
+  "exergue" : "Truc !",
   "content" : "Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.auijmezuaeuiemiueiuleui eiuealuimelui eiuemaiue iueeiuemi umae,ufip euple ulnepuesupletsuinletulneodstupeftelupftelp ufeute unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.",
-  "max_length" : 600,
+  "max_length" : 0,
   "min_length" : 550,
   "author" : "Juju et Rose",
   "can_read" : true,
@@ -47,6 +50,7 @@
   "format" : "article",
   "type" : "miam",
   "due_date" : 1523808027,
+  "exergue" : "Truc !",
   "content" : "Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.auijmezuaeuiemiueiuleui eiuealuimelui eiuemaiue iueeiuemi umae,ufip euple ulnepuesupletsuinletulneodstupeftelupftelp ufeute unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.",
   "max_length" : 600,
   "min_length" : 550,
