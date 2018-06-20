@@ -34,6 +34,8 @@ steps = [
   Step(1, 'Correction', {2:'Envoyer en mise en page' ,0:'Renvoyer en rédaction'}),
   Step(2, 'Integration', {3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}),
   Step(3, 'Archive', {3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}),
+
+  Step(10, 'Émission', {}),
 ]
 
 username_table = {u.username: u for u in users}
@@ -61,7 +63,6 @@ jwt = JWT(app, authenticate, identity)
 def protected():
     return '%s' % current_identity
 
-
 ###############################################################################
 #                     Flask REST API
 ###############################################################################
@@ -78,13 +79,42 @@ class ArticleAPI(Resource):
 
 
 class ArticleListAPI(Resource):
-  def post(self, step-id):
-    return 'post'
+  def post(self, step_id):
+    return {
+      "deadline_colors" : [
+        {"seconds" : 3600, "color" : "red"},
+        {"seconds" : 14400, "color" : "orange"}
+      ],
+      "step" : {
+        "id":step_id,
+        "next_steps":steps_table[step_id].next_steps,
+        "name":steps_table[step_id].name,
+        "can_create": ,
+        "can_admin" : (true if current_identity.name == 'scribus'),
+
+      },
+      "display" : {
+        "0" : {
+          "additional_string" : "Aujourd’hui",
+          "display" : true
+        },
+        "1" : {
+          "additional_string" : "Demain",
+          "display" : true
+        },
+        "default" : {
+          "additional_string" : "",
+          "display" : false
+        }
+      }
+
+    }
+
 
 
 api_version = 'v1.0'
 api.add_resource(ArticleAPI, '/'+api_version+'/article/<int:id>', endpoint = 'article')
-api.add_resource(ArticleListAPI, '/'+api_version+'/article/<int:step-id>', endpoint = 'articles')
+api.add_resource(ArticleListAPI, '/'+api_version+'/article/<int:step_id>', endpoint = 'articles')
 
 
 if __name__ == '__main__':
