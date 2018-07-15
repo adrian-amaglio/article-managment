@@ -3,17 +3,18 @@ from flask import Flask
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 from flask_restful import Api, Resource
-#import psycopg2
+import psycopg2, json
 
 
 ###############################################################################
 #                   Psycopg2
 ###############################################################################
-#try:
-#    conn = psycopg2.connect("dbname='template1' user='dbuser' host='localhost' password='dbpass'")
-#    cur = conn.cursor()
-#except:
-#    print("I am unable to connect to the database"
+cur = None
+try:
+    conn = psycopg2.connect("dbname='test' user='test' host='localhost' password=''")
+    cur = conn.cursor()
+except:
+    print("I am unable to connect to the database")
 
 ###############################################################################
 #                   JWT
@@ -24,8 +25,7 @@ from flask_restful import Api, Resource
 # handle bad password
 # curl localhost:5000/protected -H 'Authorization: JWT <jwt>'
 
-
-class User(object):
+class User():
     def __init__(self, id, username, password):
         self.id = id
         self.username = username
@@ -46,6 +46,7 @@ steps = [
 {'id':2, 'name':'Integration', 'next_steps':{3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}},
 {'id':3, 'name':'Archive', 'next_steps':{3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}},
 {'id':10,'name': 'Émission', 'next_steps':{11:'Archiver'}},
+{'id':11,'name': 'Archive radio', 'next_steps':{}},
 ]
 
 username_table = {u.username: u for u in users}
@@ -79,19 +80,16 @@ def protected():
 
 class ArticleAPI(Resource):
   def get(self, id):
-    return 'get '+str(id)
+    cur.execute("""select * from articles where id={:d}""".format(id))
+    return json.dumps(cur.fetchall(), sort_keys=True, default=str)
 
   def put(self, id):
     return 'put '+str(id)
 
-  def delete(self, id):
-    return 'del '+str(id)
-
 
 class ArticleListAPI(Resource):
-  def post(self, step_id):
-    pass
   def get(self, step_id):
+    cur.execute("""select * from articles where step_id={:d}""".format(step_id))
     return {
       "deadline_colors" : [
         {"seconds" : 3600, "color" : "red"},
@@ -102,9 +100,9 @@ class ArticleListAPI(Resource):
         "next_steps":steps_table[step_id]['next_steps'],
         "name":steps_table[step_id]['name'],
         "can_create": False,
+        "can_edit": True,
         "can_admin" : False,
         "see_login_button" : False,
-
       },
       "display" : {
         "0" : {
@@ -120,46 +118,7 @@ class ArticleListAPI(Resource):
           "display" : False
         }
       },
-    "articles" : [
-        {
-  "id" : 192867192,
-  "title" : "Il y a 30 ans",
-  "format" : "article",
-  "type" : "edito",
-  "due_date" : 1523741010,
-  "exergue" : "Truc !",
-  "content" : """Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.
-auijmezuaeuiemiueiuleui eiuealuimelui eiuemaiue iueeiuemi umae,ufip euple ulnepuesupletsuinletulneodstupeftelupftelp ufeute
-unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.""",
-  "max_length" : 0,
-  "min_length" : 550,
-  "author" : "Juju et Rose",
-  "can_read" : True,
-  "can_write" : True,
-  "can_create" : False,
-  "can_delete" : False,
-  "can_validate" : False
-}
-,
-{
-  "id" : 192867191,
-  "title" : "Miam",
-  "format" : "article",
-  "type" : "miam",
-  "due_date" : 1523808027,
-  "exergue" : "Truc !",
-  "content" : """Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.           
-unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.""",
-  "max_length" : 600,
-  "min_length" : 550,
-  "author" : "Rose",
-  "can_read" : True,
-  "can_write" : True,
-  "can_delete" : False,
-  "can_validate" : False
-}
-
-    ]
+      "articles" : cur.fetchall()
     }
 
 api_version = 'v1.0'
