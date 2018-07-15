@@ -89,7 +89,7 @@ class ArticleAPI(Resource):
 
 class ArticleListAPI(Resource):
   def get(self, step_id):
-    #cur.execute("""select * from articles where step_id=%d""".format(id))
+    cur.execute("""select * from articles where step_id=%d""".format(id))
     return {
       "deadline_colors" : [
         {"seconds" : 3600, "color" : "red"},
@@ -119,46 +119,7 @@ class ArticleListAPI(Resource):
           "display" : False
         }
       },
-    "articles" : [
-        {
-  "id" : 192867192,
-  "title" : "Il y a 30 ans",
-  "format" : "article",
-  "type" : "edito",
-  "due_date" : 1523741010,
-  "exergue" : "Truc !",
-  "content" : """Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.
-auijmezuaeuiemiueiuleui eiuealuimelui eiuemaiue iueeiuemi umae,ufip euple ulnepuesupletsuinletulneodstupeftelupftelp ufeute
-unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.""",
-  "max_length" : 0,
-  "min_length" : 550,
-  "author" : "Juju et Rose",
-  "can_read" : True,
-  "can_write" : True,
-  "can_create" : False,
-  "can_delete" : False,
-  "can_validate" : False
-}
-,
-{
-  "id" : 192867191,
-  "title" : "Miam",
-  "format" : "article",
-  "type" : "miam",
-  "due_date" : 1523808027,
-  "exergue" : "Truc !",
-  "content" : """Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.           
-unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.""",
-  "max_length" : 600,
-  "min_length" : 550,
-  "author" : "Rose",
-  "can_read" : True,
-  "can_write" : True,
-  "can_delete" : False,
-  "can_validate" : False
-}
-
-    ]
+      "articles" : cur.fetchall()
     }
 
 api_version = 'v1.0'
