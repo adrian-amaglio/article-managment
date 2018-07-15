@@ -21,7 +21,8 @@ $(function(){
 			ip: "192.168.43.124",
 			api: "/api/v1.0",
 			res : { "step" : {}},
-			list : []
+			list : [],
+			isGlobal: false
 		},
 		created: function() {
 			var url = location.href;
