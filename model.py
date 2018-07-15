@@ -1,34 +1,22 @@
 import os
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String, create_engine, Table
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import sessionmaker
-
-Base = declarative_base()
-
-steps_steps = Table('steps_steps', Base.metadata,
-        Column('step', Integer, ForeignKey('steps.id')),
-        Column('next', Integer, ForeignKey('steps.id'))        
-)
-
-class Step(Base):
-  __tablename__ = 'steps'
-  id = Column(Integer, primary_key=True)
-  name = Column(String(100), nullable=False)
-  next_steps = relationship('Step', secondary=steps_steps)
 
 
-class Article(Base):
-  __tablename__ = 'articles'
-  id = Column(Integer, primary_key=True)
-  title = Column(String(250), nullable=False)
-  max_lenght = Column(Integer, nullable=True)
+
+class Step():
+    def __init__(self, id, name):
+        self.id = id
+        self.name = name
+
+class Article(Base, id, title, max):
+  id = 
+  title = 
+  max_lenght = 
   step = relationship("Step")
-  content = Column(String, nullable=True)
-  author = Column(String(250), nullable=True)
-  exergue = Column(String(255), nullable=True)
-  due_date = Column(String(20), nullable=True)
+  content = 
+  author = 
+  exergue = 
+  due_date = 
 
 
 class Pictures(Base):

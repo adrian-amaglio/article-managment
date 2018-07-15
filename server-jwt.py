@@ -3,7 +3,6 @@ from flask import Flask
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 from flask_restful import Api, Resource
-from model import *
 
 ###############################################################################
 #                   JWT
@@ -30,17 +29,17 @@ users = [
     User(2, 'scribus', 'scribus'),
 ]
 steps = [
-  Step(id=0, name='Rédaction', next_step={1:'Envoyer en relecture'}),
-  Step(id=1, name='Correction', next_step={2:'Envoyer en mise en page' ,0:'Renvoyer en rédaction'}),
-  Step(id=2, name='Integration', next_step={3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}),
-  Step(id=3, name='Archive', next_step={3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}),
 
-  Step(id=10,name= 'Émission', next_step={11:'Archiver'}),
+{'id':0, 'name':'Rédaction', 'next_steps':{1:'Envoyer en relecture'}},
+{'id':1, 'name':'Correction', 'next_steps':{2:'Envoyer en mise en page' ,0:'Renvoyer en rédaction'}},
+{'id':2, 'name':'Integration', 'next_steps':{3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}},
+{'id':3, 'name':'Archive', 'next_steps':{3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}},
+{'id':10,'name': 'Émission', 'next_steps':{11:'Archiver'}},
 ]
 
 username_table = {u.username: u for u in users}
 userid_table = {u.id: u for u in users}
-steps_table = {u.id: u for u in steps}
+steps_table = {u['id']: u for u in steps}
 
 def authenticate(username, password):
     user = username_table.get(username, None)
@@ -80,6 +79,8 @@ class ArticleAPI(Resource):
 
 class ArticleListAPI(Resource):
   def post(self, step_id):
+    pass
+  def get(self, step_id):
     return {
       "deadline_colors" : [
         {"seconds" : 3600, "color" : "red"},
@@ -87,24 +88,24 @@ class ArticleListAPI(Resource):
       ],
       "step" : {
         "id":step_id,
-        "next_steps":steps_table[step_id].next_steps,
-        "name":steps_table[step_id].name,
+        "next_steps":steps_table[step_id]['next_steps'],
+        "name":steps_table[step_id]['name'],
         "can_create": False,
-        "can_admin" : (True if current_identity.name == 'scribus' else False),
+        "can_admin" : False,
 
       },
       "display" : {
         "0" : {
           "additional_string" : "Aujourd’hui",
-          "display" : true
+          "display" : True
         },
         "1" : {
           "additional_string" : "Demain",
-          "display" : true
+          "display" : True
         },
         "default" : {
           "additional_string" : "",
-          "display" : false
+          "display" : False
         }
       },
     "articles" : [
@@ -121,11 +122,11 @@ unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e 
   "max_length" : 0,
   "min_length" : 550,
   "author" : "Juju et Rose",
-  "can_read" : true,
-  "can_write" : true,
-  "can_create" : false,
-  "can_delete" : false,
-  "can_validate" : false
+  "can_read" : True,
+  "can_write" : True,
+  "can_create" : False,
+  "can_delete" : False,
+  "can_validate" : False
 }
 ,
 {
@@ -141,10 +142,10 @@ unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e 
   "max_length" : 600,
   "min_length" : 550,
   "author" : "Rose",
-  "can_read" : true,
-  "can_write" : true,
-  "can_delete" : false,
-  "can_validate" : false
+  "can_read" : True,
+  "can_write" : True,
+  "can_delete" : False,
+  "can_validate" : False
 }
 
     ]
@@ -154,7 +155,7 @@ unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e 
 
 api_version = 'v1.0'
 api.add_resource(ArticleAPI, '/'+api_version+'/article/<int:id>', endpoint = 'article')
-api.add_resource(ArticleListAPI, '/'+api_version+'/article/<int:step_id>', endpoint = 'articles')
+api.add_resource(ArticleListAPI, '/'+api_version+'/articles/<int:step_id>', endpoint = 'articles')
 
 
 if __name__ == '__main__':
