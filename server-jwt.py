@@ -3,7 +3,7 @@ from flask import Flask
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 from flask_restful import Api, Resource
-import psycopg2
+import psycopg2, json
 
 
 ###############################################################################
@@ -80,8 +80,8 @@ def protected():
 
 class ArticleAPI(Resource):
   def get(self, id):
-    cur.execute("""select * from articles where id=%d""".format(id))
-    return cur.fetchall()
+    cur.execute("""select * from articles where id={:d}""".format(id))
+    return json.dumps(cur.fetchall(), sort_keys=True, default=str)
 
   def put(self, id):
     return 'put '+str(id)
@@ -89,7 +89,7 @@ class ArticleAPI(Resource):
 
 class ArticleListAPI(Resource):
   def get(self, step_id):
-    cur.execute("""select * from articles where step_id=%d""".format(id))
+    cur.execute("""select * from articles where step_id={:d}""".format(step_id))
     return {
       "deadline_colors" : [
         {"seconds" : 3600, "color" : "red"},
@@ -103,7 +103,6 @@ class ArticleListAPI(Resource):
         "can_edit": True,
         "can_admin" : False,
         "see_login_button" : False,
-
       },
       "display" : {
         "0" : {
