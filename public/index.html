@@ -40,5 +40,16 @@
 			</ul>
 		</main>
 	</div>
+	<div v-if="!isGlobal">
+		<main>
+			<input v-bind="current_article.title" type="text" name="title"/>
+			<input v-bind="current_article.content" type="textarea" name="content">
+			<label>30/{{current_article.max_length}}</label>
+			<input v-bind="current_article.author" type="text" name="author">
+			<button>Sauvegarder</button>
+			<button v-for="step in res.step.next_steps">Sauvegarder et {{step.text}}</button>
+			<a href="index.html"><button>Annuler</button></a>
+		</main>
+	</div>
 </body>
 </html>

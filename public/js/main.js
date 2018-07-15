@@ -71,10 +71,10 @@ $(function(){
 				return "none"
 			},
 			getEmissions: function(){
-				this.changeStep(11);
+				this.changeStep(10);
 			},
 			getArticles: function(){
-				this.changeStep(1);
+				this.changeStep(0);
 			},
 			getArticle(id){
                 $.get('http://192.168.43.124/api/v1.0/article/'+id, (res,err) => {
