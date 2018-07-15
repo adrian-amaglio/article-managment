@@ -29,8 +29,10 @@ $(function(){
 			console.log(url.split("/")[url.split("/").length - 1]);
 			if(url.split("/")[url.split("/").length - 2] == "article"){
 				this.getArticle(url.split("/")[url.split("/").length - 1]);
+				this.isGlobal = false;
 			}else {
                 this.getArticles();
+                this.isGlobal = true;
             }
 		},
 		methods:{
@@ -97,7 +99,6 @@ $(function(){
                             data[dif_date] = [res.articles[i]]
                         }
                     }
-                    console.log(data);
                     this.list = [];
                     for (i in data) {
                         if (this.res.display[i]) {
@@ -108,7 +109,6 @@ $(function(){
                         }
                     }
                     this.list = this.list.sort((a,b)=>{return (a.key - b.key)});
-                    console.log(this.list);
                 })
 			}
 		}
