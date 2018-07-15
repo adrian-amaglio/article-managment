@@ -10,7 +10,7 @@
 	<title>Article management</title>
 </head>
 <body>
-	<div v-if="isGlobal">
+	<template v-if="isGlobal">
 		<h1>Rédaction</h1>
 		<main>
 			<div class="text-align-r">
@@ -39,8 +39,8 @@
 				</li>
 			</ul>
 		</main>
-	</div>
-	<div v-else>
+	</template>
+	<template v-else>
 		<main>
 			<input v-bind="current_article.title" type="text" name="title"/>
 			<input v-bind="current_article.content" type="textarea" name="content">
@@ -50,6 +50,6 @@
 			<button v-for="step in res.step.next_steps">Sauvegarder et {{step.text}}</button>
 			<a href="index.html"><button>Annuler</button></a>
 		</main>
-	</div>
+	</template>
 </body>
 </html>
