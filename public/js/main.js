@@ -21,18 +21,15 @@ $(function(){
 			ip: "192.168.43.124",
 			api: "/api/v1.0",
 			res : { "step" : {}},
-			list : [],
-			isGlobal: false
+			list : []
 		},
 		created: function() {
 			var url = location.href;
 			console.log(url.split("/")[url.split("/").length - 1]);
 			if(url.split("/")[url.split("/").length - 2] == "article"){
 				this.getArticle(url.split("/")[url.split("/").length - 1]);
-				this.isGlobal = false;
 			}else {
                 this.getArticles();
-                this.isGlobal = true;
             }
 		},
 		methods:{
@@ -81,13 +78,11 @@ $(function(){
 			},
 			getArticle(id){
                 $.get('http://192.168.43.124/api/v1.0/article/'+id, (res,err) => {
-                	this.isGlobal = false;
                 	this.res = res;
 				})
 			},
 			changeStep: function(step){
                 $.get('http://192.168.43.124/api/v1.0/articles/'+step, (res,err) => {
-                	this.isGlobal = true;
                     this.res = res;
                     var data = {};
                     var date = Math.floor(Date.now()/1000/3600/24);
