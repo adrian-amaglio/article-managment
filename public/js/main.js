@@ -15,41 +15,22 @@ function nom_categorie(i,date,display){
 }
 
 $(function(){
-	v = new Vue({
+	var v = new Vue({
 		el:"main",
 		data:{
-			api: "/api/1.0",
+			ip: "192.168.43.124",
+			api: "/api/v1.0",
 			res : { "step" : {}},
 			list : []
 		},
 		created: function() {
 			var url = location.href;
-			console.log(url.split("/")[4]);
-			$.get('articles.mock.json', (res,err) => {
-				this.res = res;
-				var data = {};
-				var date = Math.floor(Date.now()/1000/3600/24);
-				for (var i = res.articles.length - 1; i >= 0; i--) {
-					dif_date = dif_due_date_today(res.articles[i].due_date, date);
-					if(data[dif_date]){
-						data[dif_date].push(res.articles[i])
-					}else{
-						data[dif_date] = [res.articles[i]]
-					}
-				}
-				console.log(data);
-				for (i in data) {
-					if (this.res.display[i]) {
-						this.list.push({'key' : i, 'data': data[i], 'display':this.res.display[i].display})
-					}
-					else{
-						this.list.push({'key' : i, 'data': data[i], 'display':false});
-					}
-				}
-				this.list = this.list.sort((a,b)=>{return (a.key - b.key)});
-				console.log(this.list);
-			})
-
+			console.log(url.split("/")[url.split("/").length - 1]);
+			if(url.split("/")[url.split("/").length - 2] == "article"){
+				this.getArticle(url.split("/")[url.split("/").length - 1]);
+			}else {
+                this.getArticles();
+            }
 		},
 		methods:{
 			date_test : function(truc){
@@ -59,10 +40,10 @@ $(function(){
 				return(hours+":"+minutes)
 			},
 			class_due_date : function(time_stamp){
-				deadline_colors = this.res.deadline_colors.sort((a,b)=>{return (b.seconds - a.seconds)});
+				var deadline_colors = this.res.deadline_colors.sort((a,b)=>{return (b.seconds - a.seconds)});
 				var date = Math.floor(Date.now() / 1000);
 				for (var i = deadline_colors.length - 1; i >= 0; i--) {
-					data = deadline_colors[i];
+					var data = deadline_colors[i];
 					//à tester
 					if(dif_due_date_today(time_stamp,Math.floor(date/24/3600)) == 0 && (time_stamp-date) < data.seconds){
 						return { color : data.color}
@@ -88,6 +69,46 @@ $(function(){
 			},
 			repliage : function(){
 				return "none"
+			},
+			getEmissions: function(){
+				this.changeStep(11);
+			},
+			getArticles: function(){
+				this.changeStep(1);
+			},
+			getArticle(id){
+                $.get('http://192.168.43.124/api/v1.0/article/'+id, (res,err) => {
+                	this.isGlobal = false;
+                	this.res = res;
+				})
+			},
+			changeStep: function(step){
+                $.get('http://192.168.43.124/api/v1.0/articles/'+step, (res,err) => {
+                	this.isGlobal = true;
+                    this.res = res;
+                    var data = {};
+                    var date = Math.floor(Date.now()/1000/3600/24);
+                    for (var i = res.articles.length - 1; i >= 0; i--) {
+                        const dif_date = dif_due_date_today(res.articles[i].due_date, date);
+                        if(data[dif_date]){
+                            data[dif_date].push(res.articles[i])
+                        }else{
+                            data[dif_date] = [res.articles[i]]
+                        }
+                    }
+                    console.log(data);
+                    this.list = [];
+                    for (i in data) {
+                        if (this.res.display[i]) {
+                            this.list.push({'key' : i, 'data': data[i], 'display':this.res.display[i].display})
+                        }
+                        else{
+                            this.list.push({'key' : i, 'data': data[i], 'display':false});
+                        }
+                    }
+                    this.list = this.list.sort((a,b)=>{return (a.key - b.key)});
+                    console.log(this.list);
+                })
 			}
 		}
 	});

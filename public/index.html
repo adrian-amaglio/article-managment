@@ -10,30 +10,35 @@
 	<title>Article management</title>
 </head>
 <body>
-	<h1>Rédaction</h1>
-	<main>
-		<div class="text-align-r">
-			<a href=""><button class="admin btn" v-if="res.step.can_admin">Administration</button></a>
-			<a href=""><button class="login btn" v-if="res.step.see_login_button">Se connecter</button></a>
-			<a href=""><button class="new_article btn" v-if="res.step.can_create">Nouvel Article</button></a>
-		</div>
-		<ul>
-			<li v-for="day in list">
-				<h2><button class="accordeon" v-on:click="day.display=!day.display">
-					{{nom_categorie(day.key)}}
-				</button></h2>
-				<ul v-if=day.display>
-					<li class="article" v-for="article in day.data">
-						<a v-bind:href="'article/'+article.id">
-							<div class="heading"><H3>{{article.title}}</H3>
-							<div class="type" v-bind:class="article.type">{{article.type}}</div></div>
-							<div class="body"><div class="nb_char" v-html="max_length(article)"></div>
-							<div class="due_date" v-bind:style="class_due_date(article.due_date)">à rendre avant {{date_test(article.due_date)}}</div></div>
-						</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</main>
+	<div v-if="isGlobal">
+		<h1>Rédaction</h1>
+		<main>
+			<div class="text-align-r">
+				<button class="btn btn-secondary" v-on:click="getEmissions()">Émissions</button>
+				<button class="btn btn-secondary" v-on:click="getArticles()">Articles</button>
+				<a href=""><button class="btn-danger admin btn" v-if="res.step.can_admin">Administration</button></a>
+				<a href=""><button class="btn-primary login btn" v-if="res.step.see_login_button">Se connecter</button></a>
+				<a href=""><button class="btn-success new_article btn" v-if="res.step.can_create">Nouvel Article</button></a>
+			</div>
+			<ul>
+				<li v-for="day in list" class="day">
+					<h2><button class="accordeon" v-on:click="day.display=!day.display">
+						<i class="fa"  v-bind:class="(!day.display ? 'fa-angle-right' : 'fa-angle-down')"></i>
+						{{nom_categorie(day.key)}}
+					</button></h2>
+					<ul v-if=day.display>
+						<li class="article" v-for="article in day.data">
+							<a v-bind:href="'article/'+article.id">
+								<div class="heading"><H3>{{article.title}}</H3>
+								<div class="type" v-bind:class="article.type">{{article.type}}</div></div>
+								<div class="body"><div class="nb_char" v-html="max_length(article)"></div>
+								<div class="due_date" v-bind:style="class_due_date(article.due_date)">à rendre avant {{date_test(article.due_date)}}</div></div>
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</main>
+	</div>
 </body>
 </html>
