@@ -45,3 +45,4 @@ insert into steps(id, name) values(11, 'Archive radio');
 
 insert into articles(title, format, type, due_date, content, exergue, step_id, max_lenght, min_lenght, author) values ('Il y a 30 ans', 'Edito', 'article', '2018-07-15 21:26:00', 'blablabla', 'bla', 0, 100, 30, 'lucie');
 insert into articles(title, format, type, due_date, content, exergue, step_id, max_lenght, min_lenght, author) values ('Il y a 30 heures', 'Concert', 'article', '2018-07-15 21:26:00', 'bla2blabla', 'bla2', 0, 100, 30, 'Rose');
+insert into articles(title, format, type, due_date, content, exergue, step_id, max_lenght, min_lenght, author) values ('Il y a 30 radios', 'Concert', 'article', '2018-07-15 21:26:00', 'bla2blabla', 'bla2', 10, 100, 30, 'Rose');

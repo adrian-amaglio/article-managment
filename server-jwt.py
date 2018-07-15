@@ -12,7 +12,7 @@ import psycopg2, json
 cur = None
 try:
     conn = psycopg2.connect("dbname='test' user='test' host='localhost' password=''")
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
 except:
     print("I am unable to connect to the database")
 
@@ -89,7 +89,7 @@ class ArticleAPI(Resource):
 
 class ArticleListAPI(Resource):
   def get(self, step_id):
-    cur.execute("""select * from articles where step_id={:d}""".format(step_id))
+    cur.execute("""select id,title,format,type,content from articles where step_id={:d}""".format(step_id))
     return {
       "deadline_colors" : [
         {"seconds" : 3600, "color" : "red"},
