@@ -3,6 +3,17 @@ from flask import Flask
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 from flask_restful import Api, Resource
+import psycopg2
+
+
+###############################################################################
+#                   Psycopg2
+###############################################################################
+#try:
+#    conn = psycopg2.connect("dbname='template1' user='dbuser' host='localhost' password='dbpass'")
+#    cur = conn.cursor()
+#except:
+#    print("I am unable to connect to the database"
 
 ###############################################################################
 #                   JWT
@@ -92,6 +103,7 @@ class ArticleListAPI(Resource):
         "name":steps_table[step_id]['name'],
         "can_create": False,
         "can_admin" : False,
+        "see_login_button" : False,
 
       },
       "display" : {
@@ -137,7 +149,6 @@ unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e 
   "due_date" : 1523808027,
   "exergue" : "Truc !",
   "content" : """Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.           
-auijmezuaeuiemiueiuleui eiuealuimelui eiuemaiue iueeiuemi umae,ufip euple ulnepuesupletsuinletulneodstupeftelupftelp ufeute  
 unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.""",
   "max_length" : 600,
   "min_length" : 550,
@@ -150,8 +161,6 @@ unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e 
 
     ]
     }
-
-
 
 api_version = 'v1.0'
 api.add_resource(ArticleAPI, '/'+api_version+'/article/<int:id>', endpoint = 'article')
