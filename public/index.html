@@ -40,7 +40,7 @@
 			</ul>
 		</main>
 	</div>
-	<div v-if="!isGlobal">
+	<div v-else>
 		<main>
 			<input v-bind="current_article.title" type="text" name="title"/>
 			<input v-bind="current_article.content" type="textarea" name="content">
