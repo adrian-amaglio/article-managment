@@ -22,7 +22,7 @@ create  table articles (
   title varchar(255),
   format varchar(20),
   type varchar(20),
-  due_date  timestamp,
+  due_date varchar(20),
   content text,
   exergue text,
   step_id int,

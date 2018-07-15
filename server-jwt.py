@@ -77,7 +77,7 @@ def protected():
 class ArticleAPI(Resource):
   def get(self, id):
     cur.execute("""select * from articles where id={:d}""".format(id))
-    return json.dumps(cur.fetchall(), sort_keys=True, default=str)
+    return cur.fetchone()
 
   def put(self, id):
     return 'put '+str(id)
