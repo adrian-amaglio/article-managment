@@ -3,7 +3,7 @@ from flask import Flask
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 from flask_restful import Api, Resource
-
+from model import *
 
 ###############################################################################
 #                   JWT
@@ -30,12 +30,12 @@ users = [
     User(2, 'scribus', 'scribus'),
 ]
 steps = [
-  Step(0, 'Rédaction', {1:'Envoyer en relecture'),
-  Step(1, 'Correction', {2:'Envoyer en mise en page' ,0:'Renvoyer en rédaction'}),
-  Step(2, 'Integration', {3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}),
-  Step(3, 'Archive', {3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}),
+  Step(id=0, name='Rédaction', next_step={1:'Envoyer en relecture'}),
+  Step(id=1, name='Correction', next_step={2:'Envoyer en mise en page' ,0:'Renvoyer en rédaction'}),
+  Step(id=2, name='Integration', next_step={3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}),
+  Step(id=3, name='Archive', next_step={3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}),
 
-  Step(10, 'Émission', {}),
+  Step(id=10,name= 'Émission', next_step={11:'Archiver'}),
 ]
 
 username_table = {u.username: u for u in users}
@@ -89,8 +89,8 @@ class ArticleListAPI(Resource):
         "id":step_id,
         "next_steps":steps_table[step_id].next_steps,
         "name":steps_table[step_id].name,
-        "can_create": ,
-        "can_admin" : (true if current_identity.name == 'scribus'),
+        "can_create": False,
+        "can_admin" : (True if current_identity.name == 'scribus' else False),
 
       },
       "display" : {
@@ -106,8 +106,48 @@ class ArticleListAPI(Resource):
           "additional_string" : "",
           "display" : false
         }
-      }
+      },
+    "articles" : [
+        {
+  "id" : 192867192,
+  "title" : "Il y a 30 ans",
+  "format" : "article",
+  "type" : "edito",
+  "due_date" : 1523741010,
+  "exergue" : "Truc !",
+  "content" : """Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.
+auijmezuaeuiemiueiuleui eiuealuimelui eiuemaiue iueeiuemi umae,ufip euple ulnepuesupletsuinletulneodstupeftelupftelp ufeute
+unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.""",
+  "max_length" : 0,
+  "min_length" : 550,
+  "author" : "Juju et Rose",
+  "can_read" : true,
+  "can_write" : true,
+  "can_create" : false,
+  "can_delete" : false,
+  "can_validate" : false
+}
+,
+{
+  "id" : 192867191,
+  "title" : "Miam",
+  "format" : "article",
+  "type" : "miam",
+  "due_date" : 1523808027,
+  "exergue" : "Truc !",
+  "content" : """Lorem ipsum dolor sit amet iueu npfb efépeéepéhf eép ane ueae upeu peflupeupelau emupefaiu.ijma. i.           
+auijmezuaeuiemiueiuleui eiuealuimelui eiuemaiue iueeiuemi umae,ufip euple ulnepuesupletsuinletulneodstupeftelupftelp ufeute  
+unfe uleuaeflte olfeateelpu eauefetae esiaelfnaespésf*e pes épepéeapéEEop*e péepéfepe pée.""",
+  "max_length" : 600,
+  "min_length" : 550,
+  "author" : "Rose",
+  "can_read" : true,
+  "can_write" : true,
+  "can_delete" : false,
+  "can_validate" : false
+}
 
+    ]
     }
 
 

@@ -1,17 +1,22 @@
 import os
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String, create_engine
+from sqlalchemy import Column, ForeignKey, Integer, String, create_engine, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
 
+steps_steps = Table('steps_steps', Base.metadata,
+        Column('step', Integer, ForeignKey('steps.id')),
+        Column('next', Integer, ForeignKey('steps.id'))        
+)
+
 class Step(Base):
   __tablename__ = 'steps'
   id = Column(Integer, primary_key=True)
   name = Column(String(100), nullable=False)
-  next_step = relationship("Step")
+  next_steps = relationship('Step', secondary=steps_steps)
 
 
 class Article(Base):
