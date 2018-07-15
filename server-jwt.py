@@ -3,17 +3,18 @@ from flask import Flask
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 from flask_restful import Api, Resource
-#import psycopg2
+import psycopg2
 
 
 ###############################################################################
 #                   Psycopg2
 ###############################################################################
-#try:
-#    conn = psycopg2.connect("dbname='template1' user='dbuser' host='localhost' password='dbpass'")
-#    cur = conn.cursor()
-#except:
-#    print("I am unable to connect to the database"
+cur = None
+try:
+    conn = psycopg2.connect("dbname='test' user='test' host='localhost' password=''")
+    cur = conn.cursor()
+except:
+    print("I am unable to connect to the database")
 
 ###############################################################################
 #                   JWT
@@ -24,8 +25,7 @@ from flask_restful import Api, Resource
 # handle bad password
 # curl localhost:5000/protected -H 'Authorization: JWT <jwt>'
 
-
-class User(object):
+class User():
     def __init__(self, id, username, password):
         self.id = id
         self.username = username
@@ -46,6 +46,7 @@ steps = [
 {'id':2, 'name':'Integration', 'next_steps':{3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}},
 {'id':3, 'name':'Archive', 'next_steps':{3:'Archiver l’article', 1:'Renvoyer en relecture', 0:'Renvoyer en rédaction'}},
 {'id':10,'name': 'Émission', 'next_steps':{11:'Archiver'}},
+{'id':11,'name': 'Archive radio', 'next_steps':{}},
 ]
 
 username_table = {u.username: u for u in users}
@@ -79,19 +80,16 @@ def protected():
 
 class ArticleAPI(Resource):
   def get(self, id):
-    return 'get '+str(id)
+    cur.execute("""select * from articles where id=%d""".format(id))
+    return cur.fetchall()
 
   def put(self, id):
     return 'put '+str(id)
 
-  def delete(self, id):
-    return 'del '+str(id)
-
 
 class ArticleListAPI(Resource):
-  def post(self, step_id):
-    pass
   def get(self, step_id):
+    #cur.execute("""select * from articles where step_id=%d""".format(id))
     return {
       "deadline_colors" : [
         {"seconds" : 3600, "color" : "red"},
@@ -102,6 +100,7 @@ class ArticleListAPI(Resource):
         "next_steps":steps_table[step_id]['next_steps'],
         "name":steps_table[step_id]['name'],
         "can_create": False,
+        "can_edit": True,
         "can_admin" : False,
         "see_login_button" : False,
 
