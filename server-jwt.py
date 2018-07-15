@@ -3,18 +3,14 @@ from flask import Flask
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 from flask_restful import Api, Resource
-import psycopg2, json
+import psycopg2, json, psycopg2.extras
 
 
 ###############################################################################
 #                   Psycopg2
 ###############################################################################
-cur = None
-try:
-    conn = psycopg2.connect("dbname='test' user='test' host='localhost' password=''")
-    cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-except:
-    print("I am unable to connect to the database")
+conn = psycopg2.connect("dbname='test' user='test' host='localhost' password=''")
+cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
 
 ###############################################################################
 #                   JWT
@@ -89,7 +85,7 @@ class ArticleAPI(Resource):
 
 class ArticleListAPI(Resource):
   def get(self, step_id):
-    cur.execute("""select id,title,format,type,content from articles where step_id={:d}""".format(step_id))
+    cur.execute("""select * from articles where step_id={:d}""".format(step_id))
     return {
       "deadline_colors" : [
         {"seconds" : 3600, "color" : "red"},
