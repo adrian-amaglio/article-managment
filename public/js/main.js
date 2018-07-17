@@ -18,7 +18,7 @@ $(function(){
 	var v = new Vue({
 		el:"main",
 		data:{
-			ip: "192.168.43.124",
+			ip: "articles.dahus-host.fr",
 			api: "/api/v1.0",
 			res : { "step" : {}},
 			list : []
@@ -77,12 +77,12 @@ $(function(){
 				this.changeStep(0);
 			},
 			getArticle(id){
-                $.get('http://192.168.43.124/api/v1.0/article/'+id, (res,err) => {
+                $.get(this.api+'/article/'+id, (res,err) => {
                 	this.res = res;
 				})
 			},
 			changeStep: function(step){
-                $.get('http://192.168.43.124/api/v1.0/articles/'+step, (res,err) => {
+                $.get(this.api+'/articles/'+step, (res,err) => {
                     this.res = res;
                     var data = {};
                     var date = Math.floor(Date.now()/1000/3600/24);
