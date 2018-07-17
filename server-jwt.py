@@ -9,7 +9,7 @@ import psycopg2, json, psycopg2.extras
 ###############################################################################
 #                   Psycopg2
 ###############################################################################
-conn = psycopg2.connect("dbname='test' user='test' host='localhost' password=''")
+conn = psycopg2.connect("dbname='articles' user='articles' host='localhost' password='Pª3¾5ZÈY92÷èÇçtKÊ9£unÇAñÎÕW¿ö±kïeýVMnð6ABÂ¦òê¨iðõDâÄHP®Àdç4²¸È7ÛKÐ5Pý¿oi÷3¢¬³fú¤àæ÷jÒxÀY¼UWxÑª÷oK«LàÍeoï«Û³÷»íL¶ÛÂoAJ²ç¦ëG«üÊ¨á5ôpsGsªÒHÇÚ·9¯·óaýZªr§fPxH¶QíLÿÿ§a¡ì2DXýä¼÷VâáXkgâÎ¬VúC²À¯·dnÇUÑ255½Rj9À¥ÔSEbûWµÚíae¬âSäZ¨ZåTÅuêVøñn±îcLØÂQì¨çæÀÖgöÛ½eÊtÌÑLßÉÄ³î«C7mÄÿ¹ÙRkebïå2Xjyv¢gå¾gÊæ¦iúýsfQKØáUÁ¢n°æ2Á3ÅHfÂå¡Ç6ÈÀÃ76NµD3ÍäÝpTÅìG9ÁöÔ8D4bÅ7¿Å¨TÇªnmøþÙP¢ÍûnøóYA2¾ÖÆAßÈþ´áÓDFÔÜVøjméAÛF¯JÀê3Ú«»ÉêkEÒó7WA3êNrU'")
 cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
 
 ###############################################################################
