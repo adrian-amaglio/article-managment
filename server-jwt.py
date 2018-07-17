@@ -87,7 +87,7 @@ class ArticleAPI(Resource):
 
   def put(self, id):
       cur.execute("""update articles SET (title={:s}, format={:s}, type={:s}, due_date={:s}, content={:s}, exergue={:s}, step_id={:d}, max_lenght={:d}, min_lenght={:d}, author={:s})""".format()) 
-    return 'put '+str(id)
+      return 'put '+str(id)
 
   def post(self):
     cur.execute("""insert into articles(title, format, type, due_date, content, exergue, step_id, max_lenght, min_lenght, author) values ({}, {}, {}, {}, {}, {})""".format()).
