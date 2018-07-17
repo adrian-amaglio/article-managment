@@ -90,7 +90,7 @@ class ArticleAPI(Resource):
       return 'put '+str(id)
 
   def post(self):
-    cur.execute("""insert into articles(title, format, type, due_date, content, exergue, step_id, max_lenght, min_lenght, author) values ({}, {}, {}, {}, {}, {})""".format()).
+    cur.execute("""insert into articles(title, format, type, due_date, content, exergue, step_id, max_lenght, min_lenght, author) values ({}, {}, {}, {}, {}, {})""".format())
     return 'post '+str(id)
 
 
