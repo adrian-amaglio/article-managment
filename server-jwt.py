@@ -82,6 +82,7 @@ def protected():
 
 class ArticleAPI(Resource):
   def get(self, id):
+    # TODO return right size lorem ipsum if not found
     cur.execute("""select * from articles where id={:d}""".format(id))
     return cur.fetchone()
 
@@ -140,6 +141,7 @@ class ArticleListAPI(Resource):
 api_version = 'v1.0'
 api.add_resource(ArticleAPI, '/'+api_version+'/article/<int:id>', endpoint = 'article')
 api.add_resource(ArticleListAPI, '/'+api_version+'/articles/<int:step_id>', endpoint = 'articles')
+api.add_resource(ImpositionAPI, '/'+api_version+'/imposition', endpoint = 'imposition')
 
 if __name__ == '__main__':
     app.run(debug=True)
