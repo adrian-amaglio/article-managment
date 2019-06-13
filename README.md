@@ -1,3 +1,5 @@
+This project is discontinued and never reached a stable state.
+
 # Article managment
 Offer an API and a nice web interface to manage article redaction workflow.
 This tool aim to be simple to use or configure for quick installation but customizable for needy organizations.
